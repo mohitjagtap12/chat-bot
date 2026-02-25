@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Government Polytechnic Pune Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="chat-wrapper">
+
+    <div class="chat-header">
+        🎓 Government Polytechnic Pune
+        <span class="status">● Online</span>
+    </div>
+
+    <div id="chat-box" class="chat-body">
+        <div class="bot-message">
+            Hello 👋 Welcome to Government Polytechnic Pune.  
+            How can I help you today?
+        </div>
+    </div>
+
+    <div class="chat-footer">
+        <input type="text" id="user-input"
+               placeholder="Type your message..."
+               onkeyup="showSuggestions(this.value)">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+    <div id="suggestions" class="suggestions-box"></div>
+
+</div>
+
+<script>
+const suggestions = [
+    "About college",
+    "Courses offered",
+    "Admission process",
+    "Eligibility",
+    "Fees",
+    "Hostel",
+    "Placement",
+    "Library",
+    "Facilities",
+    "Location",
+    "Contact",
+    "College timing"
+];
+
+function showSuggestions(value) {
+    let box = document.getElementById("suggestions");
+    box.innerHTML = "";
+    if (value.length === 0) return;
+
+    suggestions.forEach(item => {
+        if (item.toLowerCase().includes(value.toLowerCase())) {
+            let div = document.createElement("div");
+            div.className = "suggestion-item";
+            div.innerText = item;
+            div.onclick = () => {
+                document.getElementById("user-input").value = item;
+                box.innerHTML = "";
+            };
+            box.appendChild(div);
+        }
+    });
+}
+
+function getBotReply(msg) {
+    msg = msg.toLowerCase();
+
+    if (msg.includes("about"))
+        return "Government Polytechnic Pune is a government autonomous institute established in 1957.";
+
+    if (msg.includes("location") || msg.includes("address"))
+        return "GPP Pune is located at Ganeshkhind, University Road, Shivajinagar, Pune – 411016.";
+
+    if (msg.includes("courses"))
+        return "Diploma courses: Civil, Computer, Mechanical, Electrical, E&TC, IT, Metallurgy, Dress Designing.";
+
+    if (msg.includes("admission"))
+        return "Admission is through CAP rounds conducted by DTE Maharashtra.";
+
+    if (msg.includes("eligibility"))
+        return "SSC pass with minimum 35% marks with Maths and Science.";
+
+    if (msg.includes("fees"))
+        return "Approximate diploma fees range from ₹8,750 to ₹31,000.";
+
+    if (msg.includes("hostel"))
+        return "Hostel facilities are available for boys and girls.";
+
+    if (msg.includes("placement"))
+        return "The placement cell provides training and placement support.";
+
+    if (msg.includes("library"))
+        return "The library has books, journals, and digital resources.";
+
+    if (msg.includes("facility"))
+        return "Facilities include labs, workshops, sports ground, auditorium and canteen.";
+
+    if (msg.includes("contact"))
+        return "Contact: +91-020-25559200 | Email: principal@gppune.ac.in";
+
+    if (msg.includes("timing"))
+        return "College timing is generally from 10:00 AM to 5:00 PM.";
+
+    return "Please choose a suggestion or ask about courses, admission, fees, hostel, etc.";
+}
+
+function sendMessage() {
+    let input = document.getElementById("user-input");
+    let message = input.value.trim();
+    if (message === "") return;
+
+    let chatBox = document.getElementById("chat-box");
+
+    let userDiv = document.createElement("div");
+    userDiv.className = "user-message";
+    userDiv.innerText = message;
+    chatBox.appendChild(userDiv);
+
+    let botDiv = document.createElement("div");
+    botDiv.className = "bot-message";
+    botDiv.innerText = getBotReply(message);
+    chatBox.appendChild(botDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+    input.value = "";
+    document.getElementById("suggestions").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
